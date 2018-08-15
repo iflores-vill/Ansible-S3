@@ -82,7 +82,7 @@
           action: add_resource
           resource:
             resource:
-              href: "{{ dro.json.results[0].href }}"
+              href: "{{ crear_dro_reg.json.results[0].href }}"
       register: agregar_dro_reg
       ignore_errors: true
       when: crear_dro_reg is succeeded
