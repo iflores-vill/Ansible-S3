@@ -138,20 +138,20 @@
           action: add
           resources:
             - name: "Work Order"
-              #value: "{{ numero_de_ticket  }}"
-              value: "REQS00000000001"
+              value: "{{ numero_de_ticket  }}"
+              #value: "REQS00000000001"
             - name: "General"
-              #value: "{{ nombre_general  }}"
-              value: "General 01"
+              value: "{{ nombre_general  }}"
+              #value: "General 01"
             - name: "Central"
-              #value: "{{ nombre_central  }}"
-              value: "Central 01"
+              value: "{{ nombre_central  }}"
+              #value: "Central 01"
             - name: "Aplicación"
-              #value: "{{ nombre_aplicacion }}"
-              value: "App S3"
+              value: "{{ nombre_aplicacion }}"
+              #value: "App S3"
             - name: "Versión"
-              #value: "{{ version_proyecto }}"
-              value: "1.0"
+              value: "{{ version_proyecto }}"
+              #value: "1.0"
       ignore_errors: true
       register: agregar_cu_reg
       when: crear_bucket_reg is succeeded

@@ -1,0 +1,63 @@
+---
+- hosts: localhost
+  gather_facts: False
+  connection: local
+  tasks:
+    - name: Obtener nombre de bucket
+      uri:
+        url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
+        method: GET
+        validate_certs: no
+        headers:
+          X-Auth-Token: "{{ manageiq.api_token }}"
+        body_format: json
+      register: nombre_bucket_reg
+
+    - name: Eliminar S3 bucket
+      aws_s3:
+        bucket: "{{ nombre_bucket_reg.json.options.provision_job_options.extra_vars.bucket_name }}"
+        mode: delete
+      notify: Eliminar recursos y DRO del servicio
+
+  handlers:
+    - name: Obtener los DROs que pertenecen al servicio
+      uri:
+        url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}?attributes=generic_objects"
+        method: GET
+        validate_certs: no
+        headers:
+          X-Auth-Token: "{{ manageiq.api_token }}"
+        body_format: json
+      register: dros_reg
+      listen: "Eliminar recursos y DRO del servicio"
+
+    - set_fact:
+        generic_objects: "{{ dros_reg.json.generic_objects }}"
+
+    - name: Eliminar los recursos del servicio
+      uri:
+        url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
+        method: POST
+        validate_certs: no
+        headers:
+          X-Auth-Token: "{{ manageiq.api_token }}"
+        body_format: json
+        body:
+          action: remove_resource
+          resource:
+            resource:
+              href: "{{ item.href }}"
+      with_items: "{{ dros_reg .json.generic_objects }}"
+
+    - name: Eliminar el DRO
+      uri:
+        url: "{{ item.href }}"
+        method: POST
+        validate_certs: no
+        headers:
+          X-Auth-Token: "{{ manageiq.api_token }}"
+        body_format: json
+        body:
+          action: delete
+      with_items: "{{ dros_reg.json.generic_objects }}"
+      listen: "Eliminar recursos y DRO del servicio"
