@@ -1,0 +1,27 @@
+---
+- name: Tarea de envio de correo del proceso
+  mail:
+    host: "{{ correo_servidor }}"
+    port: "{{ correo_puerto }}"
+    from: "{{ correo_de }}"
+    to: "{{ correo_solicitante }}"
+    cc: "{{ lista_correo_electronico }}"
+    subject: "{{ correo_asunto }}"
+    body: "{{ correo_cuerpo }}"
+    subtype: html
+    attach: "{{ correo_adjuntos }}"
+  retries: 3
+  delay: 5
+  register: envio_correo_reg
+  ignore_errors: True
+
+- name: "Notificacion de correo enviada satisfactoriamente"
+  command: echo ""
+  when:
+    - envio_correo_reg is succeeded
+
+- name: "Error de comunicacion con el servicio de correo"
+  command: echo ""
+  when:
+    - envio_correo_reg is failed
+...

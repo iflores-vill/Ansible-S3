@@ -164,3 +164,10 @@
           debug:
             msg: "Error al agregar CU al servicio"
       when: agregar_cu_reg is failed
+
+  - name: AWS906-00 Pasar datos de despliegue para envio de correo 
+    import_role:
+      name: comunicar_informacion_ambiente
+    ignore_errors: true
+    when: crear_bucket_reg is succeeded
+...

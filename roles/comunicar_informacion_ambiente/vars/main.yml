@@ -1,10 +1,8 @@
 ---
-# vars file for comunicar_informacion_ambiente
-#diccionario_valor_descripcion:
-#  lp: "LabPuebla"
-#  dev: "Desarrollo"
-#  uat: "Calidad (UAT)"
-#  pro: "Producción"
-#  str: "Estrés"
-#  t: "Si"
-#  f: "No"
+trans_centro_datos_sat: "Laboratorio Puebla"
+correo_de: "senha.notificacion@gmail.com"
+correo_puerto: "25"
+correo_servidor: 10.20.0.62"
+catalogo_nombre: "SENHA S3 Bucket"
+correo_asunto: "Folio {{ numero_de_ticket }} - Despliegue Completado - {{ catalogo_nombre }}"
+...
