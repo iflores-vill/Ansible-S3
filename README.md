@@ -1,6 +1,6 @@
 # Ansible-S3
 
-Playbooks para AWS S3 Bucket a desplegar desde CloudForms 5.9. Acciones:
+Playbooks para AWS S3 Bucket a desplegar desde CloudForms 5.9, tareas:
 
 - Crear bucket en AWS
   - Confirmación de existencia
@@ -10,4 +10,4 @@ Playbooks para AWS S3 Bucket a desplegar desde CloudForms 5.9. Acciones:
 - Asignar TAGs
 - Asignar CU
   - Pendiente variables para valores
-- Enviar correo 
+- Enviar correo
